@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <script>
+      // Prevent TypeError from third-party scripts trying to polyfill fetch
+      // when it's defined as a getter-only property by the environment.
+      if (typeof window !== 'undefined') {
+        try {
+          const originalFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            configurable: true,
+            get() { return originalFetch; },
+            set(val) { console.warn('Intercepted window.fetch polyfill attempt'); }
+          });
+        } catch (e) {
+          // ignore if already non-configurable
+        }
+      }
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
